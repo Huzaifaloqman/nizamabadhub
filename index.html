@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nizamabad Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .search-box {
+            max-width: 500px;
+            margin: 20px auto;
+            display: flex;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+        .search-box button {
+            padding: 10px 20px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nizamabad Directory</h1>
+        <p>Find shops, services, hospitals, restaurants and more</p>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search for a service e.g. plumber, salon, hospital..." />
+        <button onclick="searchDirectory()">Search</button>
+    </div>
+
+    <div class="container" id="results"></div>
+
+    <script>
+        const data = [
+            { name: "City Hospital", category: "Hospital", phone: "9876543210", address: "Hyderbad Road" },
+            { name: "Royal Bakery", category: "Bakery", phone: "9876543211", address: "Bodhan Road" },
+            { name: "Cool Cuts Salon", category: "Salon", phone: "9876543212", address: "Varni Road" },
+            { name: "Nizamabad Plumbers", category: "Plumber", phone: "9876543213", address: "Khaleelwadi" }
+        ];
+
+        function searchDirectory() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const resultsBox = document.getElementById("results");
+            resultsBox.innerHTML = "";
+
+            const filtered = data.filter(item => 
+                item.name.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                resultsBox.innerHTML = `<p>No results found.</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.innerHTML = `
+                    <h3>${item.name}</h3>
+                    <p><strong>Category:</strong> ${item.category}</p>
+                    <p><strong>Phone:</strong> ${item.phone}</p>
+                    <p><strong>Address:</strong> ${item.address}</p>
+                `;
+                resultsBox.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
